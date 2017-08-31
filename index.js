@@ -13,28 +13,29 @@ console.log("setting variables...");
 //bot settings
 console.log("configuring commando...");
 const client = new Commando.Client({
-  owner: '193066810470301696',
-  commandPrefix: '~',
-  disableEveryone: true
+	owner: '193066810470301696',
+	commandPrefix: '~',
+	disableEveryone: true
 });
 //load and list commands
 fs.readdir(path.join(__dirname, 'commands/'), (err, files) => {
-  console.log(`loading ${files.length} command files...`)
+	console.log(`loading ${files.length} command files...`)
 })
 client.registry
-  .registerDefaultTypes()
-  .registerGroups([
-    ['general', 'general commands'],
-    ['admin', 'admministration commands']
-  ])
-  .registerDefaultGroups()
-  .registerDefaultCommands()
-  .registerCommandsIn(path.join(__dirname, 'commands'));
+	.registerDefaultTypes()
+	.registerGroups([
+		['general', 'general commands'],
+		['admin', 'admministration commands'],
+		['economy', 'economy commands']
+	])
+	.registerDefaultGroups()
+	.registerDefaultCommands()
+	.registerCommandsIn(path.join(__dirname, 'commands'));
 
 //ready?
 client.on('ready', () => {
-  console.log(`logged in as ${client.user.tag}!`);
-  client.user.setGame('b');
+	console.log(`logged in as ${client.user.tag}!`);
+	client.user.setGame('b');
 });
 
 client.login(token);
