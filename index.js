@@ -3,6 +3,7 @@ console.log("getting apis...");
 const Commando = require('discord.js-commando');
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 //keys
 console.log("pulling keys...");
 const keys = JSON.parse(fs.readFileSync('keys.json')); //read all keys
@@ -10,6 +11,20 @@ const token = keys.discordtoken //discord api key
 const yt_api_key = keys.youtubetoken //youtube api key
 //vars
 console.log("setting variables...");
+//functions
+console.log("initializing functions...");
+
+exports.isBotAdmin = function(msg) {
+	//check if messsage author is bot controller
+	//author = message.member
+	var adminTemp = fs.readFileSync('./botAdmins.json');
+	if (msg.author.id == 193066810470301696 || adminTemp[msg.author.id]) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 //bot settings
 console.log("configuring commando...");
 const client = new Commando.Client({
