@@ -32,10 +32,13 @@ const client = new Commando.Client({
 	commandPrefix: '~',
 	disableEveryone: true
 });
-//load and list commands
-fs.readdir(path.join(__dirname, 'commands/'), (err, files) => {
-	console.log(`loading ${files.length} command files...`)
-})
+//make client global
+global.client = new Commando.Client({
+	owner: '193066810470301696',
+	commandPrefix: '~',
+	disableEveryone: true
+});
+//command groups
 client.registry
 	.registerDefaultTypes()
 	.registerGroups([
@@ -49,7 +52,8 @@ client.registry
 
 //ready?
 client.on('ready', () => {
-	console.log(`logged in as ${client.user.tag}!`);
+	console.log(`Logged in as ${client.user.tag}!`);
+	console.log(`Servers:\n${client.guilds.map(g => g.name).join("\n")}`);
 	client.user.setGame('b');
 });
 

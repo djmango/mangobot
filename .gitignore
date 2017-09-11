@@ -48,3 +48,4 @@ Temporary Items
 #mystuff
 node_modules
 keys.json
+.remote-sync.json
