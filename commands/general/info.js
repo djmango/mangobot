@@ -1,10 +1,6 @@
 const {
 	Command
 } = require('discord.js-commando');
-const os = require('os');
-const format = require('format-duration');
-const startTime = process.hrtime();
-const Commando = require('discord.js-commando');
 const {
 	RichEmbed
 } = require('discord.js');

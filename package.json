@@ -24,6 +24,10 @@
     "discord.js-commando": "^0.9.0",
     "format-duration": "^1.0.0",
     "fs": "0.0.1-security",
-    "os": "^0.1.1"
+    "mediawiki-api": "^0.1.8",
+    "os": "^0.1.1",
+    "request": "^2.81.0",
+    "striptags": "^3.1.0",
+    "wikijs": "^4.1.0"
   }
 }

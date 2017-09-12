@@ -1,9 +1,13 @@
 //api's
 console.log("getting apis...");
-const Commando = require('discord.js-commando');
-const path = require('path');
-const fs = require('fs');
-const os = require('os');
+global.Commando = require('discord.js-commando');
+global.format = require('format-duration');
+global.path = require('path');
+global.fs = require('fs');
+global.os = require('os');
+global.request = require('request');
+global.striptags = require('striptags');
+global.startTime = process.hrtime();
 //keys
 console.log("pulling keys...");
 const keys = JSON.parse(fs.readFileSync('keys.json')); //read all keys
@@ -44,7 +48,8 @@ client.registry
 	.registerGroups([
 		['general', 'general commands'],
 		['admin', 'admministration commands'],
-		['economy', 'economy commands']
+		['economy', 'economy commands'],
+		['wiki', 'wiki commands']
 	])
 	.registerDefaultGroups()
 	.registerDefaultCommands()
