@@ -23,7 +23,7 @@ module.exports = class SayCommand extends Command {
 		const {
 			text
 		} = args;
-		if (index.isBotAdmin(msg) == false) return msg.say('you are not a bot admin');
+		if (index.isBotAdmin(msg) == false) return msg.reply('You are not a bot admin');
 		msg.delete();
 		return msg.say(`\u180E${text}`);
 	}

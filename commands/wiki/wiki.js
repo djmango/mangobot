@@ -33,12 +33,12 @@ module.exports = class SayCommand extends Command {
 				let snippet = striptags(body.query.search[0].snippet)
 				const Discord = require('discord.js');
 				const embed = new Discord.RichEmbed()
-					.setTitle(body.query.search[0].title)
-					.setAuthor('MangoBot', 'https://i.imgur.com/3Z7RlAf.jpg')
-					.setDescription(`${snippet}`)
+					.setTitle(`:book: ${body.query.search[0].title}`)
+					.setAuthor('Wikipedia', 'http://i.imgur.com/JI3HL2j.png')
+					.setDescription(`${snippet}.. [Read more](${finalurl})`)
 					.setColor(0xf4b342)
-					.addField('Direct Link', `[${body.query.search[0].title}](${finalurl})`, true)
 					.addField('Word Count', `${body.query.search[0].wordcount}`, true)
+					.setFooter(`Wikipedia article pulled on ${new Date()}`)
 				msg.channel.send({
 					embed
 				});
