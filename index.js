@@ -7,12 +7,14 @@ global.fs = require('fs');
 global.os = require('os');
 global.request = require('request');
 global.striptags = require('striptags');
+global.ai = require('apiai');
 global.startTime = process.hrtime();
 //keys
 console.log("pulling keys...");
 const keys = JSON.parse(fs.readFileSync('keys.json')); //read all keys
-const token = keys.discordtoken //discord api key
-const yt_api_key = keys.youtubetoken //youtube api key
+global.token = keys.discordtoken //discord api key
+global.yt_api_key = keys.youtubetoken //youtube api key
+global.apiai = ai(keys.apiaitoken);
 //vars
 console.log("setting variables...");
 //functions
@@ -49,7 +51,8 @@ client.registry
 		['general', 'general commands'],
 		['admin', 'admministration commands'],
 		['economy', 'economy commands'],
-		['wiki', 'wiki commands']
+		['wiki', 'wiki commands'],
+		['ai', 'artificial intellegence commands']
 	])
 	.registerDefaultGroups()
 	.registerDefaultCommands()
