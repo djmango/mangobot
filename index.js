@@ -62,7 +62,6 @@ client.registry
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 	console.log(`Servers:\n${client.guilds.map(g => g.name).join("\n")}`);
-	client.user.setGame('b');
 });
 
 client.login(token);
