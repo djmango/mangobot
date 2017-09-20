@@ -8,13 +8,15 @@ global.os = require('os');
 global.request = require('request');
 global.striptags = require('striptags');
 global.ai = require('apiai');
+global.crashreporter = require('crashreporter');
 global.startTime = process.hrtime();
 //keys
 console.log("pulling keys...");
 const keys = JSON.parse(fs.readFileSync('keys.json')); //read all keys
 global.token = keys.discordtoken //discord api key
 global.yt_api_key = keys.youtubetoken //youtube api key
-global.apiai = ai(keys.apiaitoken);
+global.apiai = ai(keys.apiaitoken); //api.ai api key
+global.botsudoid = keys.botsudo //bot sudo id
 //vars
 console.log("setting variables...");
 //functions
@@ -23,8 +25,8 @@ console.log("initializing functions...");
 exports.isBotAdmin = function(msg) {
 	//check if messsage author is bot controller
 	//author = message.member
-	var adminTemp = fs.readFileSync('./botAdmins.json');
-	if (msg.author.id == 193066810470301696 || adminTemp[msg.author.id]) {
+	var adminTemp = fs.readFileSync('./data/botAdmins.json');
+	if (msg.author.id == botsudoid || adminTemp[msg.author.id]) {
 		return true;
 	} else {
 		return false;

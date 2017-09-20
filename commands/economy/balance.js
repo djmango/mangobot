@@ -9,15 +9,25 @@ module.exports = class SayCommand extends Command {
 			name: 'balance',
 			group: 'economy',
 			memberName: 'balance',
-			description: 'Shows your MangoBank balance.',
-			examples: ['balance'],
+			description: 'Shows the designated user\'s MangoBank balance.',
+			examples: ['balance @djmango'],
 		});
 	}
 	run(msg) {
 		let economy = JSON.parse(fs.readFileSync('./data/economy.json'));
-		if (!economy[msg.author.id]) {
-			return msg.say('you have not registred with MangoBank! do this with \`~register.\`')
+		let message = msg.content.split(" ");
+		if (message[1]) {
+			let mentions = msg.mentions.users.array()[0]
+			if (!economy[mentions.id]) {
+				return msg.reply(`${mentions.username} has not registred with MangoBank!`)
+			}
+			return msg.reply(`${mentions.username} has \`\u180E${economy[mentions.id]}\` MangoCredits!`);
+		} else {
+			if (!economy[msg.author.id]) {
+				return msg.reply('you have not registred with MangoBank! do this with \`~register.\`')
+			}
+			return msg.reply(`you have \`\u180E${economy[msg.author.id]}\` MangoCredits!`);
 		}
-		return msg.say(`you have \u180E${economy[msg.author.id]} MangoCredits!`);
+		return
 	}
 };
