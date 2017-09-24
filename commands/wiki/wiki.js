@@ -31,8 +31,7 @@ module.exports = class SayCommand extends Command {
 			if (!error && response.statusCode === 200 && body.query.search[0]) {
 				let finalurl = `http://en.wikipedia.org/?curid=${body.query.search[0].pageid}`
 				let snippet = striptags(body.query.search[0].snippet)
-				const Discord = require('discord.js');
-				const embed = new Discord.RichEmbed()
+				let embed = new Discord.RichEmbed()
 					.setTitle(`:book: ${body.query.search[0].title}`)
 					.setAuthor('Wikipedia', 'http://i.imgur.com/JI3HL2j.png')
 					.setDescription(`${snippet}.. [Read more](${finalurl})`)

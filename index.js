@@ -1,6 +1,7 @@
 //api's
 console.log("getting apis...");
 global.Commando = require('discord.js-commando');
+global.Discord = require('discord.js');
 global.format = require('format-duration');
 global.path = require('path');
 global.fs = require('fs');
@@ -63,6 +64,7 @@ client.registry
 //ready?
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
+	global.servers = (`Servers:\n${client.guilds.map(g => g.name).join("\n")}`)
 	console.log(`Servers:\n${client.guilds.map(g => g.name).join("\n")}`);
 });
 

@@ -11,7 +11,7 @@ module.exports = class SayCommand extends Command {
 			name: 'award',
 			group: 'economy',
 			memberName: 'award',
-			description: 'Awards you with MangoCredits (admin only).',
+			description: 'Awards a user with MangoCredits (admin only).',
 			examples: ['award @djmango$8778 50'],
 			args: [{
 				key: 'text',
