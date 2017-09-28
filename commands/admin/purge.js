@@ -27,7 +27,7 @@ module.exports = class SayCommand extends Command {
 		if (index.isBotAdmin(msg) == false) return msg.say('You are not a bot admin');
 		let messagecount = parseInt(message[1]);
 		if (messagecount > 10000) {
-			msg.reply('You cannot delete more than 10000 messages at a time!')
+			return msg.reply('You cannot delete more than 10000 messages at a time!')
 		}
 		if (messagecount > 100) {
 			messagecount = messagecount / 100;

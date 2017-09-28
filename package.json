@@ -20,8 +20,10 @@
   },
   "homepage": "https://github.com/djmango/mango-bot#readme",
   "dependencies": {
+    "dateformat": "^3.0.2",
     "discord.js": "^11.1.0",
     "discord.js-commando": "^0.9.0",
+    "format": "^0.2.2",
     "format-duration": "^1.0.0",
     "fs": "0.0.1-security",
     "mediawiki-api": "^0.1.8",

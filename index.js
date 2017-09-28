@@ -10,19 +10,19 @@ global.request = require('request');
 global.striptags = require('striptags');
 global.ai = require('apiai');
 global.crashreporter = require('crashreporter');
+global.dateFormat = require('dateformat');
 global.startTime = process.hrtime();
 //keys
 console.log("pulling keys...");
 const keys = JSON.parse(fs.readFileSync('keys.json')); //read all keys
 global.token = keys.discordtoken //discord api key
-global.yt_api_key = keys.youtubetoken //youtube api key
 global.apiai = ai(keys.apiaitoken); //api.ai api key
+global.yt_api_key = keys.youtubetoken //youtube api key
 global.botsudoid = keys.botsudo //bot sudo id
 //vars
 console.log("setting variables...");
 //functions
 console.log("initializing functions...");
-
 exports.isBotAdmin = function(msg) {
 	//check if messsage author is bot controller
 	//author = message.member
@@ -47,12 +47,13 @@ global.client = new Commando.Client({
 	commandPrefix: '~',
 	disableEveryone: true
 });
+global.discordClient = new Discord.Client
 //command groups
 client.registry
 	.registerDefaultTypes()
 	.registerGroups([
 		['general', 'general commands'],
-		['admin', 'admministration commands'],
+		['admin', 'administration commands'],
 		['economy', 'economy commands'],
 		['wiki', 'wiki commands'],
 		['ai', 'artificial intellegence commands']
@@ -67,5 +68,4 @@ client.on('ready', () => {
 	global.servers = (`Servers:\n${client.guilds.map(g => g.name).join("\n")}`)
 	console.log(`Servers:\n${client.guilds.map(g => g.name).join("\n")}`);
 });
-
 client.login(token);

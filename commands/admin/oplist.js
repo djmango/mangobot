@@ -7,9 +7,9 @@ const index = require('../../index.js');
 module.exports = class SayCommand extends Command {
 	constructor(client) {
 		super(client, {
-			name: 'listop',
+			name: 'oplist',
 			group: 'admin',
-			memberName: 'listop',
+			memberName: 'oplist',
 			description: 'Lists all users in the admin list.',
 			examples: ['listop']
 		});
