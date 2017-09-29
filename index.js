@@ -2,6 +2,7 @@
 console.log("getting apis...");
 global.Commando = require('discord.js-commando');
 global.Discord = require('discord.js');
+global.music = require('discord.js-music-v11');
 global.format = require('format-duration');
 global.path = require('path');
 global.fs = require('fs');
@@ -11,6 +12,7 @@ global.striptags = require('striptags');
 global.ai = require('apiai');
 global.crashreporter = require('crashreporter');
 global.dateFormat = require('dateformat');
+global.prettyMs = require('pretty-ms');
 global.startTime = process.hrtime();
 //keys
 console.log("pulling keys...");
@@ -56,7 +58,8 @@ client.registry
 		['admin', 'administration commands'],
 		['economy', 'economy commands'],
 		['wiki', 'wiki commands'],
-		['ai', 'artificial intellegence commands']
+		['ai', 'artificial intellegence commands'],
+		['music', 'music commands']
 	])
 	.registerDefaultGroups()
 	.registerDefaultCommands()
@@ -67,5 +70,14 @@ client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 	global.servers = (`Servers:\n${client.guilds.map(g => g.name).join("\n")}`)
 	console.log(`Servers:\n${client.guilds.map(g => g.name).join("\n")}`);
+});
+
+music(client, {
+	prefix: "~", //The prefix to use for the commands
+	global: false, //Whether to use a global queue instead of a server-specific queue (default false).
+	maxQueueSize: 10, //The maximum queue size (default 20).
+	anyoneCanSkip: true, //Allow anybody to skip the song.
+	clearInvoker: false, //Clear the command message.
+	volume: 50, //The default volume of the player.
 });
 client.login(token);
