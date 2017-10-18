@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/djmango/mango-bot#readme",
   "dependencies": {
+    "@google-cloud/vision": "^0.12.0",
     "apiai": "^4.0.3",
     "crashreporter": "^1.1.0",
     "dateformat": "^3.0.2",
@@ -28,6 +29,7 @@
     "format": "^0.2.2",
     "format-duration": "^1.0.0",
     "fs": "0.0.1-security",
+    "image-downloader": "^3.3.0",
     "mediawiki-api": "^0.1.8",
     "os": "^0.1.1",
     "pretty-ms": "^3.0.1",

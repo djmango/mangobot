@@ -47,5 +47,6 @@ Temporary Items
 .apdisk
 #mystuff
 node_modules
+keys
 keys.json
 .remote-sync.json
