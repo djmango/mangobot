@@ -20,7 +20,7 @@ module.exports = class SayCommand extends Command {
 		});
 	}
 	run(msg) {
-		if (!msg.attachments) return msg.reply('you must attach an image');
+		if (!msg.attachments.array()[0]) return msg.reply('you must attach an image');
 		let options = {
 			url: msg.attachments.array()[0].url,
 			dest: './data/cache.jpg'

@@ -26,12 +26,15 @@ module.exports = class SayCommand extends Command {
 		let adminList = JSON.parse(fs.readFileSync('./data/botAdmins.json'));
 		let message = msg.content.split(" ");
 		let mentions = msg.mentions.users.array()[0]
-		if (index.isBotAdmin(msg) == false) return msg.reply('You are not a bot admin.');
-		if (adminList[mentions.username]) return msg.reply(`${mentions.username} is already an admin!`);
-		adminList[mentions.username] = mentions.id
-		fs.writeFileSync('./data/botAdmins.json', JSON.stringify(adminList)), (err) => {
-			if (err) throw err;
+		index.isBotAdmin(msg)
+		if (isAdminGlobal == false) return msg.reply('You are not a bot admin.');
+		else {
+			if (adminList[mentions.username]) return msg.reply(`${mentions.username} is already an admin!`);
+			adminList[mentions.username] = mentions.id
+			fs.writeFileSync('./data/botAdmins.json', JSON.stringify(adminList)), (err) => {
+				if (err) throw err;
+			}
+			return msg.reply(`Succesfully added ${mentions.username} to the admin list!`);
 		}
-		return msg.reply(`Succesfully added ${mentions.username} to the admin list!`);
 	}
 };

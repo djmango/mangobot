@@ -11,7 +11,7 @@ module.exports = class SayCommand extends Command {
 			group: 'general',
 			memberName: 'say',
 			description: 'Replies with the text you provide.',
-			examples: ['speak Hi there!'],
+			examples: ['say Hi there!'],
 			args: [{
 				key: 'text',
 				prompt: 'What text would you like the bot to say?',
@@ -20,11 +20,16 @@ module.exports = class SayCommand extends Command {
 		});
 	}
 	run(msg, args) {
-		if (index.isBotAdmin(msg) == false) return msg.reply('You are not a bot admin.');
-		const {
-			text
-		} = args;
-		msg.delete();
-		return msg.say(`\u180E${text}`);
+		index.isBotAdmin(msg)
+		if (isAdminGlobal == false) return msg.reply('You are not a bot admin.');
+		else {
+			if (msg.mentions.channels.first()) {
+				msg.delete().catch(console.error);
+				msg.mentions.channels.first().send(args.text.split(" ").slice(1).join(" "));
+			} else {
+				msg.channel.send(args.text);
+				msg.delete().catch(console.error);
+			}
+		}
 	}
 };

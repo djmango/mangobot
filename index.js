@@ -18,6 +18,7 @@ global.vision = require('@google-cloud/vision')({
 	projectId: 'mangobot-c6c7c',
 	keyFilename: './keys/mangobot-87a8c3e04f5d.json'
 });;
+global.ud = require('urban-dictionary');
 global.startTime = process.hrtime();
 //keys
 console.log("pulling keys...");
@@ -30,13 +31,15 @@ global.botsudoid = keys.botsudo //bot sudo id
 //prob nothing here for a while, everything is locally defined
 //functions
 console.log("initializing functions...");
-exports.isBotAdmin = function(msg, authorID) {
+exports.isBotAdmin = async function(msg) {
 	//check if messsage author is bot controller
 	//author = message.member
-	var adminTemp = fs.readFileSync('./data/botAdmins.json');
-	if (msg.author.id == botsudoid || adminTemp[msg.author.id] || adminTemp[authorID]) {
+	let adminTemp = fs.readFileSync('./data/botAdmins.json');
+	if (msg.author.id == botsudoid || msg.author.id == adminTemp[msg.author.id]) {
+		global.isAdminGlobal = true; //i dont know why this works and the function doesnt but it does so leave it
 		return true;
 	} else {
+		global.isAdminGlobal = false;
 		return false;
 	}
 }
@@ -44,13 +47,13 @@ exports.isBotAdmin = function(msg, authorID) {
 //bot settings
 console.log("configuring commando...");
 const client = new Commando.Client({
-	owner: '193066810470301696',
+	owner: botsudoid,
 	commandPrefix: '~',
 	disableEveryone: true
 });
 //make client global
 global.client = new Commando.Client({
-	owner: '193066810470301696',
+	owner: botsudoid,
 	commandPrefix: '~',
 	disableEveryone: true
 });

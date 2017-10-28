@@ -24,12 +24,15 @@ module.exports = class SayCommand extends Command {
 		let economy = JSON.parse(fs.readFileSync('./data/economy.json'));
 		let message = msg.content.split(" "); //take each argument
 		let mentions = msg.mentions.users.array()[0]
-		if (index.isBotAdmin(msg) == false) return msg.say('You are not a bot admin');
-		if (!economy[msg.author.id]) return msg.reply('You are not registered with MangoBank!')
-		if (!economy[mentions.id]) return msg.reply(`${mentions.username} is not registered with MangoBank!`)
-		if (!message[2]) return msg.reply('Try again, use the correct format(~award @djmango 50)!')
-		economy[mentions.id] = economy[mentions.id] + parseInt(message[2])
-		fs.writeFileSync('./data/economy.json', JSON.stringify(economy));
-		return msg.say(`${msg.author.username} has awarded ${mentions.username} ${message[2]} MangoCredits`);
+		index.isBotAdmin(msg)
+		if (isAdminGlobal == false) return msg.reply('You are not a bot admin.');
+		else {
+			if (!economy[msg.author.id]) return msg.reply('You are not registered with MangoBank!')
+			if (!economy[mentions.id]) return msg.reply(`${mentions.username} is not registered with MangoBank!`)
+			if (!message[2]) return msg.reply('Try again, use the correct format(~award @djmango 50)!')
+			economy[mentions.id] = economy[mentions.id] + parseInt(message[2])
+			fs.writeFileSync('./data/economy.json', JSON.stringify(economy));
+			return msg.say(`${msg.author.username} has awarded ${mentions.username} ${message[2]} MangoCredits`);
+		}
 	}
 };
