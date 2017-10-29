@@ -1,9 +1,6 @@
 const {
 	Command
 } = require('discord.js-commando');
-const fs = require('fs');
-const path = require('path');
-const index = require('../../index.js');
 
 module.exports = class SayCommand extends Command {
 	constructor(client) {
@@ -24,7 +21,8 @@ module.exports = class SayCommand extends Command {
 		let economy = JSON.parse(fs.readFileSync('./data/economy.json'));
 		let message = msg.content.split(" "); //take each argument
 		let mentions = msg.mentions.users.array()[0]
-		index.isBotAdmin(msg)
+		if (!mentions) return msg.reply('you must mention someone or not add any extra arguments!')
+		isBotAdmin(msg)
 		if (isAdminGlobal == false) return msg.reply('You are not a bot admin.');
 		else {
 			if (!economy[msg.author.id]) return msg.reply('You are not registered with MangoBank!')

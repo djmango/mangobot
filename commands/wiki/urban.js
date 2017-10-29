@@ -28,9 +28,6 @@ module.exports = class SayCommand extends Command {
 				console.error(error.message)
 				msg.reply(`The query \`${messagefull}\` returned no results or returned an error.`);
 			} else {
-				console.log(entries[0].word)
-				console.log(entries[0].definition)
-				console.log(entries[0].example)
 				let embed = new Discord.RichEmbed()
 					.setTitle(`:pencil: ${entries[0].word}`)
 					.setAuthor('Urban Dictionary', 'http://i.imgur.com/qv7WT83.png')

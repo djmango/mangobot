@@ -1,8 +1,6 @@
 const {
 	Command
 } = require('discord.js-commando');
-const fs = require('fs');
-const index = require('../../index.js');
 
 module.exports = class SayCommand extends Command {
 	constructor(client) {
@@ -25,7 +23,7 @@ module.exports = class SayCommand extends Command {
 		} = args;
 		let logs = JSON.parse(fs.readFileSync('./data/logs.json'));
 		let message = msg.content.split(" ");
-		index.isBotAdmin(msg)
+		isBotAdmin(msg)
 		if (isAdminGlobal == false) return msg.reply('You are not a bot admin.');
 		else {
 			let messagecount = parseInt(message[1]);

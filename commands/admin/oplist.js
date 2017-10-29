@@ -1,8 +1,6 @@
 const {
 	Command
 } = require('discord.js-commando');
-const fs = require('fs');
-const index = require('../../index.js');
 
 module.exports = class SayCommand extends Command {
 	constructor(client) {
@@ -14,7 +12,7 @@ module.exports = class SayCommand extends Command {
 			examples: ['listop']
 		});
 	}
-	run(msg) {
+	async run(msg) {
 		let adminList = JSON.parse(fs.readFileSync('./data/botAdmins.json'));
 		let admins = "";
 		for (var k in adminList) admins = admins + k + ", ";

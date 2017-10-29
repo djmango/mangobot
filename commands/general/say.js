@@ -1,8 +1,6 @@
 const {
 	Command
 } = require('discord.js-commando');
-const fs = require('fs');
-const index = require('../../index.js');
 
 module.exports = class SayCommand extends Command {
 	constructor(client) {
@@ -19,8 +17,8 @@ module.exports = class SayCommand extends Command {
 			}]
 		});
 	}
-	run(msg, args) {
-		index.isBotAdmin(msg)
+	async run(msg, args) {
+		isBotAdmin(msg)
 		if (isAdminGlobal == false) return msg.reply('You are not a bot admin.');
 		else {
 			if (msg.mentions.channels.first()) {

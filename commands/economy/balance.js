@@ -1,7 +1,6 @@
 const {
 	Command
 } = require('discord.js-commando');
-const fs = require('fs');
 
 module.exports = class SayCommand extends Command {
 	constructor(client) {
@@ -13,11 +12,12 @@ module.exports = class SayCommand extends Command {
 			examples: ['balance @djmango'],
 		});
 	}
-	run(msg) {
+	async run(msg) {
 		let economy = JSON.parse(fs.readFileSync('./data/economy.json'));
 		let message = msg.content.split(" ");
-		if (message[1]) {
+		if (message[1]) { //if looking for someone else
 			let mentions = msg.mentions.users.array()[0]
+			if (!mentions) return msg.reply('you must mention someone or not add any extra arguments!')
 			if (!economy[mentions.id]) {
 				return msg.reply(`${mentions.username} has not registred with MangoBank!`)
 			}

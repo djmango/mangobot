@@ -1,9 +1,6 @@
 const {
 	Command
 } = require('discord.js-commando');
-const fs = require('fs');
-const path = require('path');
-const index = require('../../index.js');
 
 module.exports = class SayCommand extends Command {
 	constructor(client) {
@@ -15,7 +12,7 @@ module.exports = class SayCommand extends Command {
 			examples: ['whatis (image, it needs to be attached)'],
 			throttling: {
 				usages: 3,
-				duration: 30
+				duration: 60
 			}
 		});
 	}

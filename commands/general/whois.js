@@ -1,9 +1,6 @@
 const {
 	Command
 } = require('discord.js-commando');
-const fs = require('fs');
-const path = require('path');
-const index = require('../../index.js');
 
 module.exports = class SayCommand extends Command {
 	constructor(client) {
@@ -23,6 +20,7 @@ module.exports = class SayCommand extends Command {
 	run(msg, args) {
 		let message = msg.content.split(" "); //take each argument
 		let mentions = msg.mentions.users.array()[0]
+		if (!mentions) return msg.reply('you must mention someone or not add any extra arguments!')
 		var whois = args[1]
 		const Discord = require('discord.js');
 		let embed = new Discord.RichEmbed()

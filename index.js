@@ -31,11 +31,11 @@ global.botsudoid = keys.botsudo //bot sudo id
 //prob nothing here for a while, everything is locally defined
 //functions
 console.log("initializing functions...");
-exports.isBotAdmin = async function(msg) {
+global.isBotAdmin = function(msg) {
 	//check if messsage author is bot controller
 	//author = message.member
 	let adminTemp = fs.readFileSync('./data/botAdmins.json');
-	if (msg.author.id == botsudoid || msg.author.id == adminTemp[msg.author.id]) {
+	if (msg.author.id == botsudoid || adminTemp.toString().indexOf(msg.author.id)) {
 		global.isAdminGlobal = true; //i dont know why this works and the function doesnt but it does so leave it
 		return true;
 	} else {
@@ -67,7 +67,9 @@ client.registry
 		['economy', 'economy commands'],
 		['wiki', 'wiki commands'],
 		['ai', 'artificial intellegence commands'],
-		['music', 'music commands']
+		['music', 'music commands'],
+		['fun', 'commands just for fun'],
+		['literature', 'commands relating to literature']
 	])
 	.registerDefaultGroups()
 	.registerDefaultCommands()

@@ -1,8 +1,6 @@
 const {
 	Command
 } = require('discord.js-commando');
-const fs = require('fs');
-const index = require('../../index.js');
 
 module.exports = class SayCommand extends Command {
 	constructor(client) {
@@ -19,14 +17,15 @@ module.exports = class SayCommand extends Command {
 			}]
 		});
 	}
-	run(msg, args) {
+	async run(msg, args) {
 		const {
 			text
 		} = args;
 		let adminList = JSON.parse(fs.readFileSync('./data/botAdmins.json'));
 		let message = msg.content.split(" ");
 		let mentions = msg.mentions.users.array()[0]
-		index.isBotAdmin(msg)
+		if (!mentions) return msg.reply('you must mention someone or not add any extra arguments!')
+		isBotAdmin(msg)
 		if (isAdminGlobal == false) return msg.reply('You are not a bot admin.');
 		else {
 			if (mentions.id == botsudoid) {

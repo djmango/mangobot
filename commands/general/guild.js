@@ -4,8 +4,6 @@ const {
 const {
 	RichEmbed
 } = require('discord.js');
-const fs = require('fs');
-const index = require('../../index.js');
 
 module.exports = class SayCommand extends Command {
 	constructor(client) {
