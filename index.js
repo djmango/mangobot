@@ -46,16 +46,12 @@ global.isBotAdmin = function(msg) {
 
 //bot settings
 console.log("configuring commando...");
-const client = new Commando.Client({
-	owner: botsudoid,
-	commandPrefix: '~',
-	disableEveryone: true
-});
 //make client global
 global.client = new Commando.Client({
 	owner: botsudoid,
-	commandPrefix: '~',
-	disableEveryone: true
+	commandPrefix: '!~',
+	disableEveryone: true,
+	unknownCommandResponse: false
 });
 global.discordClient = new Discord.Client
 //command groups
@@ -80,10 +76,20 @@ client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 	global.servers = (`Servers:\n${client.guilds.map(g => g.name).join("\n")}`);
 	console.log(`Servers:\n${client.guilds.map(g => g.name).join("\n")}`);
+	let localUsers = client.users.array().length
+	let setStatus = setInterval(function() {
+		client.user.setPresence({
+			game: {
+				name: `!~help | ${localUsers} users | goo.gl/qoVTdx`,
+				type: 0
+			}
+		});
+	}, 60000)
+
 });
 
 music(client, {
-	prefix: "~", //The prefix to use for the commands
+	prefix: "!~", //The prefix to use for the commands
 	global: false, //Whether to use a global queue instead of a server-specific queue (default false).
 	maxQueueSize: 5, //The maximum queue size (default 20).
 	anyoneCanSkip: true, //Allow anybody to skip the song.

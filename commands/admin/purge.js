@@ -17,7 +17,7 @@ module.exports = class SayCommand extends Command {
 			}]
 		});
 	}
-	run(msg, args) {
+	async run(msg, args) {
 		const {
 			text
 		} = args;
@@ -47,6 +47,7 @@ module.exports = class SayCommand extends Command {
 				purgelog[0] = messagecount
 				purgelog[1] = Date.now()
 				// TODO: add log interface, more logs! also desktop app using electron
+				// TODO: VERY IMPORTANT: FIX EDGE CASES! message[1] doesnt work when input is after init cmd, must fix also add async to everything
 				logs[msg.author.id]["purge"] = purgelog; //log stuff
 				fs.writeFileSync('./data/logs.json', JSON.stringify(logs));
 				msg.reply(`Succesfully deleted ${messagecount} messages!`);

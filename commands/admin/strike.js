@@ -17,7 +17,7 @@ module.exports = class SayCommand extends Command {
 			}]
 		});
 	}
-	run(msg, args) {
+	async run(msg, args) {
 		const {
 			text
 		} = args;

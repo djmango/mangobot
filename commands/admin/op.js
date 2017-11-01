@@ -24,7 +24,7 @@ module.exports = class SayCommand extends Command {
 		let adminList = JSON.parse(fs.readFileSync('./data/botAdmins.json'));
 		let message = msg.content.split(" ");
 		let mentions = msg.mentions.users.array()[0]
-		if (!mentions) return msg.reply('you must mention someone or not add any extra arguments!')
+		if (!mentions) return msg.reply('you must mention someone and not add any extra arguments!')
 		isBotAdmin(msg)
 		if (isAdminGlobal == false) return msg.reply('You are not a bot admin.');
 		else {

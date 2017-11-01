@@ -12,7 +12,7 @@ module.exports = class SayCommand extends Command {
 			group: 'general',
 			memberName: 'info',
 			description: 'Displays bot info.',
-			examples: ['balance'],
+			examples: ['info'],
 		});
 	}
 	run(msg, client) {
