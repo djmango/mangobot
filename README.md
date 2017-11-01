@@ -5,6 +5,11 @@ why does this exist?
 ------
 my previous discord bot, dnakbot, suffered from frequent crashes and didnt have the features i was looking for. the commando package was a huge improvement on discord.js and i decided to do a rewrite based upon it.
 
+
+add mangobot to your server
+------
+simply open [this](https://goo.gl/qoVTdx) link, and add follow the instructions!
+
 features
 ------
 youtube music playback
