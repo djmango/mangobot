@@ -15,7 +15,7 @@ module.exports = class SayCommand extends Command {
 			examples: ['guild']
 		});
 	}
-	run(msg) {
+	async run(msg) {
 		if (!msg.guild) return msg.reply('This is not a guild!');
 		let embed = new RichEmbed()
 			.setAuthor('MangoBot')

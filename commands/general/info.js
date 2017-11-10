@@ -15,7 +15,7 @@ module.exports = class SayCommand extends Command {
 			examples: ['info'],
 		});
 	}
-	run(msg, client) {
+	async run(msg, client) {
 		var uptime = format((process.hrtime()[0] - startTime[0]) * 1000);
 		var memory = (Math.round(1 * os.freemem()) / 1000000 + "/" + Math.round(1 * os.totalmem()) / 1000000);
 		var cpu = (os.cpus()[0].model);

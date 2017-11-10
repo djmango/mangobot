@@ -17,23 +17,27 @@ module.exports = class SayCommand extends Command {
 			}]
 		});
 	}
-	async run(msg, args) {
-		const {
-			text
-		} = args;
-		let adminList = JSON.parse(fs.readFileSync('./data/botAdmins.json'));
-		let message = msg.content.split(" ");
+	run(msg, args) {
 		let mentions = msg.mentions.users.array()[0]
 		if (!mentions) return msg.reply('you must mention someone and not add any extra arguments!')
-		isBotAdmin(msg)
-		if (isAdminGlobal == false) return msg.reply('You are not a bot admin.');
-		else {
-			if (adminList[mentions.username]) return msg.reply(`${mentions.username} is already an admin!`);
-			adminList[mentions.username] = mentions.id
-			fs.writeFileSync('./data/botAdmins.json', JSON.stringify(adminList)), (err) => {
-				if (err) throw err;
+		mysqlConnection.query(`select * from op where userId=${msg.author.id}`, function(error, results, fields) {
+			if (error) throw error;
+			if (!results[0]) { //if it didnt work
+				return msg.reply('You are not a bot admin.');
 			}
-			return msg.reply(`Succesfully added ${mentions.username} to the admin list!`);
-		}
+			if (msg.author.id == botsudoid || msg.author.id == results[0].userId) { //if it did work
+				mysqlConnection.query(`select * from op where userId=${mentions.id}`, function(error, results, fields) {
+					if (error) throw error;
+					if (!results[0]) { //if the user is not already in the list
+						mysqlConnection.query(`insert into op (userId, username, serverId)
+						values (${mentions.id}, '${mentions.username}', ${msg.guild.id})`, function(error, results, fields) {
+							return msg.reply(`Succesfully added ${mentions.username} to the admin list!`);
+						})
+					} else { //if the user is already in the list
+						return msg.reply(`${mentions.username} is already an admin!`);
+					}
+				})
+			}
+		});
 	}
-};
+}

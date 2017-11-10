@@ -15,7 +15,7 @@ module.exports = class SayCommand extends Command {
 			examples: ['invite'],
 		});
 	}
-	run(msg) {
+	async run(msg) {
 		return msg.say('invite link: https://goo.gl/qoVTdx')
 	}
 };

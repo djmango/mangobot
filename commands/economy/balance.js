@@ -15,6 +15,14 @@ module.exports = class SayCommand extends Command {
 	async run(msg) {
 		let economy = JSON.parse(fs.readFileSync('./data/economy.json'));
 		let message = msg.content.split(" ");
+		if (args) {
+			let message = args.content.split(" ");
+			let c = 1;
+			for (var i = 0; i < args.length; i++) {
+				message[i] = args[c]
+				c++;
+			}
+		}
 		if (message[1]) { //if looking for someone else
 			let mentions = msg.mentions.users.array()[0]
 			if (!mentions) return msg.reply('you must mention someone or not add any extra arguments!')

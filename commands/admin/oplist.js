@@ -13,9 +13,11 @@ module.exports = class SayCommand extends Command {
 		});
 	}
 	async run(msg) {
-		let adminList = JSON.parse(fs.readFileSync('./data/botAdmins.json'));
-		let admins = "";
-		for (var k in adminList) admins = admins + k + ", ";
-		return msg.channel.send(`${admins} are all admins`);
+		mysqlConnection.query(`select username from op`, function(error, results, fields) {
+			if (error) throw error;
+			let admins = "";
+			for (var i in results) admins = admins + "\n" + results[i].username;
+			return msg.channel.send(`Admins: ${admins}`);
+		})
 	}
 };

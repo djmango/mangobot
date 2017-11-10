@@ -17,9 +17,17 @@ module.exports = class SayCommand extends Command {
 			}]
 		});
 	}
-	run(msg, args) {
+	async run(msg, args) {
 		let economy = JSON.parse(fs.readFileSync('./data/economy.json'));
 		let message = msg.content.split(" "); //take each argument
+		if (args) {
+			let message = args.content.split(" ");
+			let c = 1;
+			for (var i = 0; i < args.length; i++) {
+				message[i] = args[c]
+				c++;
+			}
+		}
 		let mentions = msg.mentions.users.array()[0]
 		if (!mentions) return msg.reply('you must mention someone or not add any extra arguments!')
 		isBotAdmin(msg)

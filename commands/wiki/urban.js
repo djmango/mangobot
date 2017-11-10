@@ -17,7 +17,7 @@ module.exports = class SayCommand extends Command {
 			}]
 		});
 	}
-	run(msg, args) {
+	async run(msg, args) {
 		let message = msg.content.split(" ");
 		let messagefull = "";
 		for (var i = 1; i < message.length; i++) {

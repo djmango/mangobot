@@ -18,6 +18,7 @@ global.vision = require('@google-cloud/vision')({
 	projectId: 'mangobot-c6c7c',
 	keyFilename: './keys/mangobot-87a8c3e04f5d.json'
 });;
+global.mysql = require('mysql');
 global.ud = require('urban-dictionary');
 global.startTime = process.hrtime();
 //keys
@@ -31,25 +32,52 @@ global.botsudoid = keys.botsudo //bot sudo id
 //prob nothing here for a while, everything is locally defined
 //functions
 console.log("initializing functions...");
-global.isBotAdmin = function(msg) {
-	//check if messsage author is bot controller
-	//author = message.member
-	let adminTemp = fs.readFileSync('./data/botAdmins.json');
-	if (msg.author.id == botsudoid || adminTemp.toString().indexOf(msg.author.id)) {
-		global.isAdminGlobal = true; //i dont know why this works and the function doesnt but it does so leave it
-		return true;
-	} else {
-		global.isAdminGlobal = false;
-		return false;
-	}
+
+//connect to mysql server
+console.log("connecting to mysql server..");
+let db_config = ({
+	host: 'localhost',
+	user: 'root',
+	password: keys.mysql,
+	database: 'mangobot'
+});
+
+function handleDisconnect() {
+	global.mysqlConnection = mysql.createConnection(db_config); // Recreate the connection, since the old one cannot be reused.
+	mysqlConnection.connect(function(err) { // The server is either down
+		if (err) { // or restarting (takes a while sometimes).
+			console.log('error when connecting to db:', err);
+			setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
+		} // to avoid a hot loop, and to allow our node script to
+		// process asynchronous requests in the meantime.
+		else {
+			console.log("successfully connected to mysql server!");
+		}
+	});
+
+	mysqlConnection.on('error', function(err) {
+		console.log('db error', err);
+		if (err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
+			handleDisconnect(); // lost due to either server restart, or a
+		} else { // connnection idle timeout (the wait_timeout
+			throw err; // server variable configures this)
+		}
+	});
 }
+
+handleDisconnect();
+
+// mysqlConnection.query('select * from op', function(error, results, fields) {
+// 	if (error) throw error;
+// 	console.log(results);
+// });
 
 //bot settings
 console.log("configuring commando...");
 //make client global
 global.client = new Commando.Client({
 	owner: botsudoid,
-	commandPrefix: '!~',
+	commandPrefix: 'm!',
 	disableEveryone: true,
 	unknownCommandResponse: false
 });
@@ -80,16 +108,23 @@ client.on('ready', () => {
 	let setStatus = setInterval(function() {
 		client.user.setPresence({
 			game: {
-				name: `!~help | ${localUsers} users | goo.gl/qoVTdx`,
+				name: `m!help | ${localUsers} users | goo.gl/qoVTdx`,
 				type: 0
 			}
 		});
 	}, 60000)
-
 });
 
+client.on('guildCreate', (guild) => {
+	console.log(`joined guild ${guild.name}, initializing new guild setup`)
+	mysqlConnection.query(`INSERT INTO op (userId, username, serverId)
+VALUES ('${guild.ownerID}', '${guild.owner.displayName}', '${guild.id}');`, function(error, results, fields) {
+		if (error) throw error;
+	});
+})
+//music lib cuz im lazy
 music(client, {
-	prefix: "!~", //The prefix to use for the commands
+	prefix: "m!", //The prefix to use for the commands
 	global: false, //Whether to use a global queue instead of a server-specific queue (default false).
 	maxQueueSize: 5, //The maximum queue size (default 20).
 	anyoneCanSkip: true, //Allow anybody to skip the song.

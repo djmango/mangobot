@@ -12,7 +12,7 @@ module.exports = class SayCommand extends Command {
 			examples: ['redeem'],
 		});
 	}
-	run(msg) {
+	async run(msg) {
 		let economy = JSON.parse(fs.readFileSync('./data/economy.json'));
 		let logs = JSON.parse(fs.readFileSync('./data/logs.json'));
 		//structure: id:type:data

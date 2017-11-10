@@ -12,7 +12,7 @@ module.exports = class SayCommand extends Command {
 			examples: ['listservers']
 		});
 	}
-	run(msg) {
+	async run(msg) {
 		return msg.say(servers);
 	}
 };

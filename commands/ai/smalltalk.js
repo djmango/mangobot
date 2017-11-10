@@ -17,11 +17,19 @@ module.exports = class SayCommand extends Command {
 			}]
 		});
 	}
-	run(msg, args) {
+	async run(msg, args) {
 		const {
 			text
 		} = args;
 		let message = msg.content.split(" ");
+		if (args) {
+			let message = args.content.split(" ");
+			let c = 1;
+			for (var i = 0; i < args.length; i++) {
+				message[i] = args[c]
+				c++;
+			}
+		}
 		let statement = "";
 		for (var i = 1; i < message.length; i++) {
 			statement = statement + message[i] + " "

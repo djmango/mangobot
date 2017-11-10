@@ -17,7 +17,7 @@ module.exports = class SayCommand extends Command {
 			}]
 		});
 	}
-	run(msg, args) {
+	async run(msg, args) {
 		let message = msg.content.split(" "); //take each argument
 		let mentions = msg.mentions.users.array()[0]
 		if (!mentions) return msg.reply('you must mention someone or not add any extra arguments!')

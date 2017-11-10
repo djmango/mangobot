@@ -12,7 +12,7 @@ module.exports = class ReplyCommand extends Command {
 			examples: ['hello']
 		});
 	}
-	run(msg) {
+	async run(msg) {
 		return msg.say('Hi, I\'m awake!');
 	}
 };

@@ -21,26 +21,24 @@ module.exports = class SayCommand extends Command {
 		const {
 			text
 		} = args;
-		let adminList = JSON.parse(fs.readFileSync('./data/botAdmins.json'));
-		let message = msg.content.split(" ");
 		let mentions = msg.mentions.users.array()[0]
-		if (!mentions) return msg.reply('you must mention someone or not add any extra arguments!')
-		isBotAdmin(msg)
-		if (isAdminGlobal == false) return msg.reply('You are not a bot admin.');
-		else {
-			if (mentions.id == botsudoid) {
-				delete adminList[msg.author.username]
-				fs.writeFileSync('./data/botAdmins.json', JSON.stringify(adminList)), (err) => {
-					if (err) throw err;
-				}
-				return msg.reply('You can\'t do that. You have been removed from the admin list because you are mean.')
+		if (!mentions) return msg.reply('you must mention someone and not add any extra arguments!')
+		mysqlConnection.query(`select * from op where userId=${msg.author.id}`, function(error, results, fields) {
+			if (error) throw error;
+			if (!results[0]) { //if it didnt work
+				return msg.reply('You are not a bot admin.');
 			}
-			if (!adminList[mentions.username]) return msg.reply(`${mentions.username} not an admin!`);
-			delete adminList[mentions.username]
-			fs.writeFileSync('./data/botAdmins.json', JSON.stringify(adminList)), (err) => {
-				if (err) throw err;
+			if (msg.author.id == botsudoid || msg.author.id == results[0].userId) { //if it did work
+				mysqlConnection.query(`select * from op where userId=${mentions.id}`, function(error, results, fields) {
+					if (error) throw error;
+					if (!results[0]) { //if the user is not on the list
+						return msg.reply(`${mentions.username} is not on the admin list!`);
+					} else { //if the user is on the list
+						mysqlConnection.query(`delete from op where userId=${mentions.id}`, function(error, results, fields) {})
+						return msg.reply(`Succesfully removed ${mentions.username} from the admin list!`);
+					}
+				})
 			}
-			return msg.reply(`Succesfully removed ${mentions.username} from the admin list!`);
-		}
+		});
 	}
 };

@@ -12,7 +12,7 @@ module.exports = class SayCommand extends Command {
 			examples: ['balance'],
 		});
 	}
-	run(msg) {
+	async run(msg) {
 		let economy = JSON.parse(fs.readFileSync('./data/economy.json'));
 		if (economy[msg.author.id]) {
 			return msg.say('you are already registred with MangoBank!')
