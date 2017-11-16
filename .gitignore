@@ -50,3 +50,5 @@ node_modules
 keys
 keys.json
 .remote-sync.json
+index.js
+.vscode

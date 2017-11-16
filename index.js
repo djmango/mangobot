@@ -1,4 +1,4 @@
-//api's
+//apis
 console.log("getting apis...");
 global.Commando = require('discord.js-commando');
 global.Discord = require('discord.js');
@@ -17,17 +17,17 @@ global.imageDownloader = require('image-downloader');
 global.vision = require('@google-cloud/vision')({
 	projectId: 'mangobot-c6c7c',
 	keyFilename: './keys/mangobot-87a8c3e04f5d.json'
-});;
+});
 global.mysql = require('mysql');
 global.ud = require('urban-dictionary');
 global.startTime = process.hrtime();
 //keys
 console.log("pulling keys...");
 const keys = JSON.parse(fs.readFileSync('./keys/keys.json')); //read all keys
-global.token = keys.discordtoken //discord api key
+global.token = keys.discordtoken; //discord api key
 global.apiai = ai(keys.apiaitoken); //api.ai api key
-global.yt_api_key = keys.youtubetoken //youtube api key
-global.botsudoid = keys.botsudo //bot sudo id
+global.yt_api_key = keys.youtubetoken; //youtube api key
+global.botsudoid = keys.botsudo; //bot sudo id
 //vars
 //prob nothing here for a while, everything is locally defined
 //functions
@@ -43,8 +43,9 @@ let db_config = ({
 });
 
 function handleDisconnect() {
+	const keys = JSON.parse(fs.readFileSync('./keys/keys.json')); //read all keys
 	global.mysqlConnection = mysql.createConnection(db_config); // Recreate the connection, since the old one cannot be reused.
-	mysqlConnection.connect(function(err) { // The server is either down
+	mysqlConnection.connect(function (err) { // The server is either down
 		if (err) { // or restarting (takes a while sometimes).
 			console.log('error when connecting to db:', err);
 			setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
@@ -55,7 +56,7 @@ function handleDisconnect() {
 		}
 	});
 
-	mysqlConnection.on('error', function(err) {
+	mysqlConnection.on('error', function (err) {
 		console.log('db error', err);
 		if (err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
 			handleDisconnect(); // lost due to either server restart, or a
@@ -67,11 +68,6 @@ function handleDisconnect() {
 
 handleDisconnect();
 
-// mysqlConnection.query('select * from op', function(error, results, fields) {
-// 	if (error) throw error;
-// 	console.log(results);
-// });
-
 //bot settings
 console.log("configuring commando...");
 //make client global
@@ -81,7 +77,7 @@ global.client = new Commando.Client({
 	disableEveryone: true,
 	unknownCommandResponse: false
 });
-global.discordClient = new Discord.Client
+global.discordClient = new Discord.Client();
 //command groups
 client.registry
 	.registerDefaultTypes()
@@ -104,24 +100,33 @@ client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 	global.servers = (`Servers:\n${client.guilds.map(g => g.name).join("\n")}`);
 	console.log(`Servers:\n${client.guilds.map(g => g.name).join("\n")}`);
-	let localUsers = client.users.array().length
-	let setStatus = setInterval(function() {
+	let localUsers = client.users.array().length;
+	let updatePres = setInterval(function () {
 		client.user.setPresence({
 			game: {
 				name: `m!help | ${localUsers} users | goo.gl/qoVTdx`,
 				type: 0
 			}
 		});
-	}, 60000)
+	}, 60000);
+	updatePres;
 });
 
 client.on('guildCreate', (guild) => {
-	console.log(`joined guild ${guild.name}, initializing new guild setup`)
+	console.log(`joined guild ${guild.name}, initializing new guild setup`);
 	mysqlConnection.query(`INSERT INTO op (userId, username, serverId)
-VALUES ('${guild.ownerID}', '${guild.owner.displayName}', '${guild.id}');`, function(error, results, fields) {
+VALUES ('${guild.ownerID}', '${guild.owner.displayName}', '${guild.id}');`, function (error, results, fields) {
 		if (error) throw error;
 	});
-})
+	let localUsers = client.users.array().length;
+	client.user.setPresence({
+		game: {
+			name: `m!help | ${localUsers} users | goo.gl/qoVTdx`,
+			type: 0
+		}
+	});
+
+});
 //music lib cuz im lazy
 music(client, {
 	prefix: "m!", //The prefix to use for the commands
