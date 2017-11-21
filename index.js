@@ -36,7 +36,7 @@ console.log("initializing functions...");
 //connect to mysql server
 console.log("connecting to mysql server..");
 let db_config = ({
-	host: 'localhost',
+	host: keys.mysqlip,
 	user: 'root',
 	password: keys.mysql,
 	database: 'mangobot'
@@ -127,6 +127,40 @@ VALUES ('${guild.ownerID}', '${guild.owner.displayName}', '${guild.id}');`, func
 	});
 
 });
+
+//handlers for errors and disconnects
+client.on('disconnect', function (event) {
+	if (event.code != 1000) {
+		console.log("Discord client disconnected with reason: " + event.reason + " (" + event.code + "). Attempting to reconnect in 6s...");
+		setTimeout(function () {
+			client.login(token);
+		}, 6000);
+	}
+});
+
+client.on('error', function (err) {
+	console.log("Discord client error '" + err.code + "'. Attempting to reconnect in 6s...");
+	client.destroy();
+	setTimeout(function () {
+		client.login(token);
+	}, 6000);
+});
+
+process.on('rejectionHandled', (err) => {
+	console.log(err);
+	console.log("an error occurred. reconnecting...");
+	client.destroy();
+	setTimeout(function () {
+		client.login(token);
+	}, 2000);
+});
+
+process.on('exit', function () {
+	mysqlConnection.end();
+	client.destroy();
+});
+
+client.login(token);
 //music lib cuz im lazy
 music(client, {
 	prefix: "m!", //The prefix to use for the commands
@@ -136,4 +170,3 @@ music(client, {
 	clearInvoker: false, //Clear the command message.
 	volume: 50, //The default volume of the player.
 });
-client.login(token);

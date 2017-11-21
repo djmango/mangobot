@@ -55,7 +55,7 @@ module.exports = class SayCommand extends Command {
 					purgelog[0] = messagecount
 					purgelog[1] = Date.now()
 					// TODO: add log interface, more logs! also web app, work with turtleboi
-					// TODO: CONVERT EVERYTHING TO SQL; op done; economy not done; logs not done;
+					// TODO: CONVERT EVERYTHING TO SQL; op done; economy done; logs not done;
 					// TODO: get some cookies
 					logs[msg.author.id]["purge"] = purgelog; //log stuff
 					fs.writeFileSync('./data/logs.json', JSON.stringify(logs));

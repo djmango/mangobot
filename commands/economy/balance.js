@@ -13,29 +13,25 @@ module.exports = class SayCommand extends Command {
 		});
 	}
 	async run(msg) {
-		let economy = JSON.parse(fs.readFileSync('./data/economy.json'));
 		let message = msg.content.split(" ");
-		if (args) {
-			let message = args.content.split(" ");
-			let c = 1;
-			for (var i = 0; i < args.length; i++) {
-				message[i] = args[c]
-				c++;
-			}
-		}
+
 		if (message[1]) { //if looking for someone else
 			let mentions = msg.mentions.users.array()[0]
 			if (!mentions) return msg.reply('you must mention someone or not add any extra arguments!')
-			if (!economy[mentions.id]) {
-				return msg.reply(`${mentions.username} has not registred with MangoBank!`)
-			}
-			return msg.reply(`${mentions.username} has \`\u180E${economy[mentions.id]}\` MangoCredits!`);
-		} else {
-			if (!economy[msg.author.id]) {
-				return msg.reply('you have not registred with MangoBank! do this with \`~register.\`')
-			}
-			return msg.reply(`you have \`\u180E${economy[msg.author.id]}\` MangoCredits!`);
+			mysqlConnection.query(`select * from economy where userId=${mentions.id}`, function (error, results, fields) {
+				if (error) console.log(error);
+				else if (!results[0]) {
+					return msg.reply(`${mentions.username} has not registred with MangoBank!`)
+				} else return msg.reply(`${mentions.username} has ${results[0].value} MangoCredits!`);
+			})
+
+		} else { //if message sender balance
+			mysqlConnection.query(`select * from economy where userId=${msg.author.id}`, function (error, results, fields) {
+				if (error) console.log(error);
+				else if (!results[0]) {
+					return msg.reply(`${msg.author.username} has not registred with MangoBank!`)
+				} else return msg.reply(`${msg.author.username} has ${results[0].value} MangoCredits!`);
+			})
 		}
-		return
 	}
 };
