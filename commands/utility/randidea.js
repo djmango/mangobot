@@ -5,7 +5,7 @@ class ridea extends commando.Command {
 	constructor(client) {
 		super(client, {
 			name: 'ridea',
-			group: 'literature',
+			group: 'utility',
 			memberName: 'ridea',
 			description: 'Creates a random idea.'
 		});

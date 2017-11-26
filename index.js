@@ -14,16 +14,20 @@ global.crashreporter = require('crashreporter');
 global.dateFormat = require('dateformat');
 global.prettyMs = require('pretty-ms');
 global.imageDownloader = require('image-downloader');
+global.mysql = require('mysql');
+global.ud = require('urban-dictionary');
+global.startTime = process.hrtime();
+//pull keys file
+const keys = JSON.parse(fs.readFileSync('./keys/keys.json')); //read all keys
+//google apis
+global.GoogleUrl = require('google-url');
+global.googleUrl = new GoogleUrl({ key: keys.googletoken});
 global.vision = require('@google-cloud/vision')({
 	projectId: 'mangobot-c6c7c',
 	keyFilename: './keys/mangobot-87a8c3e04f5d.json'
 });
-global.mysql = require('mysql');
-global.ud = require('urban-dictionary');
-global.startTime = process.hrtime();
 //keys
 console.log("pulling keys...");
-const keys = JSON.parse(fs.readFileSync('./keys/keys.json')); //read all keys
 global.token = keys.discordtoken; //discord api key
 global.apiai = ai(keys.apiaitoken); //api.ai api key
 global.yt_api_key = keys.youtubetoken; //youtube api key
@@ -89,7 +93,7 @@ client.registry
 		['ai', 'artificial intellegence commands'],
 		['music', 'music commands'],
 		['fun', 'commands just for fun'],
-		['literature', 'commands relating to literature']
+		['utility', 'generally useful commands']
 	])
 	.registerDefaultGroups()
 	.registerDefaultCommands()
@@ -102,6 +106,7 @@ client.on('ready', () => {
 	console.log(`Servers:\n${client.guilds.map(g => g.name).join("\n")}`);
 	let localUsers = client.users.array().length;
 	let updatePres = setInterval(function () {
+		let localUsers = client.users.array().length;
 		client.user.setPresence({
 			game: {
 				name: `m!help | ${localUsers} users | goo.gl/qoVTdx`,
@@ -112,7 +117,7 @@ client.on('ready', () => {
 	updatePres;
 });
 
-client.on('guildCreate', (guild) => {
+client.on('guildCreate', (guild) => { //new guild setup
 	console.log(`joined guild ${guild.name}, initializing new guild setup`);
 	mysqlConnection.query(`INSERT INTO op (userId, username, serverId)
 VALUES ('${guild.ownerID}', '${guild.owner.displayName}', '${guild.id}');`, function (error, results, fields) {

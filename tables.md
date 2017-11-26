@@ -10,6 +10,13 @@ CREATE TABLE economy (
     value varchar(255)
 );
 
+CREATE TABLE url (
+    userId varchar(255),
+	longUrl varchar(255),
+    shortUrl varchar(255),
+	callTime varchar(255)
+);
+
 INSERT INTO op (userId, username, serverId)
 VALUES ('378581620325744652', 'djmango', '335495391711854593');
 

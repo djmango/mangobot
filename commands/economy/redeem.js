@@ -16,7 +16,7 @@ module.exports = class SayCommand extends Command {
 		mysqlConnection.query(`select * from economy where userId=${msg.author.id}`, function (error, results, fields) {
 			if (error) throw (error);
 			if (!results[0]) { //if the user not in the list
-				return msg.reply(`${msg.author.username} is not registered with MangoBank!`);
+				return msg.reply(`you are not registered with MangoBank!`);
 			}
 			let oldValue = results[0].value;
 			let lastRedeem = results[0].lastRedeem;

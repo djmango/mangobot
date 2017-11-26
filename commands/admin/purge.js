@@ -18,23 +18,13 @@ module.exports = class SayCommand extends Command {
 		});
 	}
 	async run(msg, args) {
-		let logs = JSON.parse(fs.readFileSync('./data/logs.json'));
-		let message = msg.content.split(" ");
-		if (args) {
-			let message = args.content.split(" ");
-			let c = 1;
-			for (var i = 0; i < args.length; i++) {
-				c++;
-				message[i] = args[c]
-			}
-		}
 		mysqlConnection.query(`select * from op where userId=${msg.author.id}`, function(error, results, fields) {
 			if (error) throw error;
 			if (!results[0]) { //if it didnt work
 				return msg.reply('You are not a bot admin.');
 			}
 			if (msg.author.id == botsudoid || msg.author.id == results[0].userId) { //if it did work
-				let messagecount = parseInt(message[1]);
+				let messagecount = args.text;
 				if (messagecount > 10000) {
 					return msg.reply('You cannot delete more than 10000 messages at a time!')
 				}
@@ -51,14 +41,6 @@ module.exports = class SayCommand extends Command {
 					msg.channel.fetchMessages({
 						limit: messagecount
 					}).then(messages => msg.channel.bulkDelete(messages))
-					let purgelog = []
-					purgelog[0] = messagecount
-					purgelog[1] = Date.now()
-					// TODO: add log interface, more logs! also web app, work with turtleboi
-					// TODO: CONVERT EVERYTHING TO SQL; op done; economy done; logs not done;
-					// TODO: get some cookies
-					logs[msg.author.id]["purge"] = purgelog; //log stuff
-					fs.writeFileSync('./data/logs.json', JSON.stringify(logs));
 					msg.reply(`Succesfully deleted ${messagecount} messages!`);
 				}
 			}
