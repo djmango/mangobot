@@ -17,10 +17,8 @@ module.exports = class who extends commando.Command {
 		});
 	}
 
-	async run(message, args) {
-		let mentions = msg.mentions.users.array()[0]
-		if (!mentions) return msg.reply('you must mention someone or not add any extra arguments!')
-		const random = message.channel.guild.members.filter(member => member.presence.status === 'online').random().user;
-		return message.channel.sendMessage(`${message.author} asked: \`who ${args.question}\`: **${random.username}**#${random.discriminator}`);
+	async run(msg, args) {
+		const random = msg.channel.guild.members.filter(member => member.presence.status === 'online').random().user;
+		return msg.channel.sendMessage(`${msg.author} asked: \`who ${args.question}\`: **${random.username}**#${random.discriminator}`);
 	}
 };

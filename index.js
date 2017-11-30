@@ -34,8 +34,10 @@ global.yt_api_key = keys.youtubetoken; //youtube api key
 global.botsudoid = keys.botsudo; //bot sudo id
 //vars
 //prob nothing here for a while, everything is locally defined
+
 //functions
 console.log("initializing functions...");
+//wow this is lonely
 
 //connect to mysql server
 console.log("connecting to mysql server..");
@@ -165,7 +167,6 @@ process.on('exit', function () {
 	client.destroy();
 });
 
-client.login(token);
 //music lib cuz im lazy
 music(client, {
 	prefix: "m!", //The prefix to use for the commands
@@ -175,3 +176,5 @@ music(client, {
 	clearInvoker: false, //Clear the command message.
 	volume: 50, //The default volume of the player.
 });
+
+client.login(token);

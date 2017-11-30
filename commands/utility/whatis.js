@@ -6,7 +6,7 @@ module.exports = class SayCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'whatis',
-			group: 'general',
+			group: 'utility',
 			memberName: 'whatis',
 			description: 'Attempts to figure out what the image is.',
 			examples: ['whatis (image, it needs to be attached)'],

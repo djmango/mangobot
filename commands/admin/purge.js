@@ -18,15 +18,16 @@ module.exports = class SayCommand extends Command {
 		});
 	}
 	async run(msg, args) {
-		mysqlConnection.query(`select * from op where userId=${msg.author.id}`, function(error, results, fields) {
+		mysqlConnection.query(`select * from op where userId=${msg.author.id}`, function (error, results, fields) {
 			if (error) throw error;
 			if (!results[0]) { //if it didnt work
 				return msg.reply('You are not a bot admin.');
 			}
 			if (msg.author.id == botsudoid || msg.author.id == results[0].userId) { //if it did work
 				let messagecount = args.text;
+				if (messagecount <= 2) return msg.reply('You can not delete less than 2 messages!')
 				if (messagecount > 10000) {
-					return msg.reply('You cannot delete more than 10000 messages at a time!')
+					return msg.reply('You can not delete more than 10000 messages at a time!')
 				}
 				if (messagecount > 100) {
 					messagecount = messagecount / 100;

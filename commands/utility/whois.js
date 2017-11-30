@@ -6,7 +6,7 @@ module.exports = class SayCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'whois',
-			group: 'general',
+			group: 'utility',
 			memberName: 'whois',
 			description: 'Gives info on the designated user.',
 			examples: ['whois @djmango$8778'],

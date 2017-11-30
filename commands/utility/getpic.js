@@ -4,7 +4,7 @@ module.exports = class getpic extends commando.Command {
 	constructor(client) {
 		super(client, {
 			name: 'getpic',
-			group: 'general',
+			group: 'utility',
 			memberName: 'getpic',
 			description: 'Gets an avatar and sends it.',
 			args: [{
