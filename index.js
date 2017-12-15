@@ -32,6 +32,10 @@ global.token = keys.discordtoken; //discord api key
 global.apiai = ai(keys.apiaitoken); //api.ai api key
 global.yt_api_key = keys.youtubetoken; //youtube api key
 global.botsudoid = keys.botsudo; //bot sudo id
+//debug setup
+if (keys.dev == "true") global.prefix = "m!!"
+else global.prefix = "m!"
+
 //vars
 //prob nothing here for a while, everything is locally defined
 
@@ -79,7 +83,7 @@ console.log("configuring commando...");
 //make client global
 global.client = new Commando.Client({
 	owner: botsudoid,
-	commandPrefix: 'm!',
+	commandPrefix: prefix,
 	disableEveryone: true,
 	unknownCommandResponse: false
 });
@@ -100,7 +104,6 @@ client.registry
 	.registerDefaultGroups()
 	.registerDefaultCommands()
 	.registerCommandsIn(path.join(__dirname, 'commands'));
-
 //ready?
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
@@ -111,7 +114,7 @@ client.on('ready', () => {
 		let localUsers = client.users.array().length;
 		client.user.setPresence({
 			game: {
-				name: `m!help | ${localUsers} users | goo.gl/qoVTdx`,
+				name: `${prefix}help | ${localUsers} users | goo.gl/qoVTdx`,
 				type: 0
 			}
 		});
@@ -128,7 +131,7 @@ VALUES ('${guild.ownerID}', '${guild.owner.displayName}', '${guild.id}');`, func
 	let localUsers = client.users.array().length;
 	client.user.setPresence({
 		game: {
-			name: `m!help | ${localUsers} users | goo.gl/qoVTdx`,
+			name: `${prefix}help | ${localUsers} users | goo.gl/qoVTdx`,
 			type: 0
 		}
 	});
@@ -169,7 +172,7 @@ process.on('exit', function () {
 
 //music lib cuz im lazy
 music(client, {
-	prefix: "m!", //The prefix to use for the commands
+	prefix: prefix, //The prefix to use for the commands
 	global: false, //Whether to use a global queue instead of a server-specific queue (default false).
 	maxQueueSize: 5, //The maximum queue size (default 20).
 	anyoneCanSkip: true, //Allow anybody to skip the song.
