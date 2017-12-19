@@ -38,6 +38,7 @@
     "os": "^0.1.1",
     "pretty-ms": "^3.0.1",
     "request": "^2.81.0",
+    "snekfetch": "^3.6.1",
     "sqlite": "^2.8.0",
     "striptags": "^3.1.0",
     "superagent": "^3.8.0",
