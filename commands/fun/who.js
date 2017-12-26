@@ -19,6 +19,6 @@ module.exports = class who extends commando.Command {
 
 	async run(msg, args) {
 		const random = msg.channel.guild.members.filter(member => member.presence.status === 'online').random().user;
-		return msg.channel.sendMessage(`${msg.author} asked: \`who ${args.question}\`: **${random.username}**#${random.discriminator}`);
+		return msg.channel.sendMessage(`${msg.author} asked who ${args.question}: The answer is ${random.username}!`);
 	}
 };
