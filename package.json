@@ -4,7 +4,9 @@
   "description": "revamped version of dnakbot",
   "main": "index.js",
   "scripts": {
-    "test": "snyk test"
+    "test": "snyk test",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -43,9 +45,9 @@
     "striptags": "^3.1.0",
     "superagent": "^3.8.0",
     "urban-dictionary": "^1.0.6",
-    "wikijs": "^4.1.0"
+    "wikijs": "^4.1.0",
+    "snyk": "^1.69.7"
   },
-  "devDependencies": {
-    "snyk": "^1.56.0"
-  }
+  "devDependencies": {},
+  "snyk": true
 }
