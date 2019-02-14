@@ -23,7 +23,7 @@ module.exports = class SayCommand extends Command {
 			if (!results[0]) { //if it didnt work
 				return msg.reply('You are not a bot admin.');
 			}
-			if (msg.author.id == botsudoid || msg.author.id == results[0].userId) { //if it did work
+			if (msg.author.id == botSudoId || msg.author.id == results[0].userId) { //if it did work
 				let messagecount = args.text;
 				if (messagecount <= 2) return msg.reply('You can not delete less than 2 messages!')
 				if (messagecount > 10000) {

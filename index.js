@@ -21,7 +21,7 @@ const keys = JSON.parse(fs.readFileSync('./keys/keys.json')); //read all keys
 //keys
 console.log("pulling keys...");
 global.token = keys.discordtoken; //discord api key
-global.botsudoid = keys.botsudo; //bot sudo id
+global.botSudoId = keys.botsudo; //bot sudo id
 
 //debug setup
 if (keys.dev == "true") global.prefix = "m!!"
@@ -48,21 +48,17 @@ fs.stat('./data/database.db', async function (err, stat) {
 // db migrate function
 function migrate() {
 	// admins table, {id, level}
-	db.exec("create table admins (id varchar(25), level varchar(2))")
+	db.exec("create table op (userId varchar(255), username varchar(255), serverId varchar(255))")
 
 	// economy table {userId, username, value, lastRedeem}
 	db.exec("create table economy (userId varchar(255), username varchar(255), value varchar(255), lastRedeem varchar(255))")
-
-	// admin me
-	db.exec(`insert into admins values (${global.botsudoid}, 0)`)
 }
-
 
 //bot settings
 console.log("configuring commando...");
 //make client global
 global.client = new Commando.Client({
-	owner: botsudoid,
+	owner: botSudoId,
 	commandPrefix: prefix,
 	disableEveryone: true,
 	unknownCommandResponse: false
@@ -103,8 +99,8 @@ client.on('ready', () => {
 
 client.on('guildCreate', (guild) => { //new guild setup
 	console.log(`joined guild ${guild.name}, initializing new guild setup`);
-	db.exec(`INSERT INTO op (userId, username, serverId)
-VALUES ('${guild.ownerID}', '${guild.owner.displayName}', '${guild.id}');`, function (error, results, fields) {
+	db.exec(`insert into op (userId, username, serverId)
+values ('${guild.ownerID}', '${guild.owner.displayName}', '${guild.id}');`, function (error, results, fields) {
 		if (error) throw error;
 	});
 	let localUsers = client.users.array().length;
@@ -145,7 +141,6 @@ process.on('rejectionHandled', (err) => {
 });
 
 process.on('exit', function () {
-	mysqlConnection.end();
 	client.destroy();
 });
 

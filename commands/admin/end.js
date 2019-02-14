@@ -13,9 +13,8 @@ module.exports = class SayCommand extends Command {
 		});
 	}
 	async run(msg) {
-		if (msg.author.id == botsudoid) {
+		if (msg.author.id == botSudoId) {
 			msg.reply('going down now!').then(value => {
-				mysqlConnection.end();
 				process.exit()
 			});
 		} else {
