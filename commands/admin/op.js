@@ -20,16 +20,16 @@ module.exports = class SayCommand extends Command {
 	run(msg, args) {
 		let mentions = msg.mentions.users.array()[0]
 		if (!mentions) return msg.reply('you must mention someone and not add any extra arguments!')
-		mysqlConnection.query(`select * from op where userId=${msg.author.id}`, function(error, results, fields) {
+		db.exec(`select * from op where userId=${msg.author.id}`, function(error, results, fields) {
 			if (error) throw error;
 			if (!results[0]) { //if it didnt work
 				return msg.reply('You are not a bot admin.');
 			}
 			if (msg.author.id == botsudoid || msg.author.id == results[0].userId) { //if it did work
-				mysqlConnection.query(`select * from op where userId=${mentions.id}`, function(error, results, fields) {
+				db.exec(`select * from op where userId=${mentions.id}`, function(error, results, fields) {
 					if (error) throw error;
 					if (!results[0]) { //if the user is not already in the list
-						mysqlConnection.query(`insert into op (userId, username, serverId)
+						db.exec(`insert into op (userId, username, serverId)
 						values (${mentions.id}, '${mentions.username}', ${msg.guild.id})`, function(error, results, fields) {
 							return msg.reply(`Succesfully added ${mentions.username} to the admin list!`);
 						})

@@ -18,7 +18,7 @@ module.exports = class SayCommand extends Command {
 		if (message[1]) { //if looking for someone else
 			let mentions = msg.mentions.users.array()[0]
 			if (!mentions) return msg.reply('you must mention someone or not add any extra arguments!')
-			mysqlConnection.query(`select * from economy where userId=${mentions.id}`, function (error, results, fields) {
+			db.exec(`select * from economy where userId=${mentions.id}`, function (error, results, fields) {
 				if (error) console.log(error);
 				else if (!results[0]) {
 					return msg.reply(`${mentions.username} has not registred with MangoBank!`)
@@ -26,7 +26,7 @@ module.exports = class SayCommand extends Command {
 			})
 
 		} else { //if message sender balance
-			mysqlConnection.query(`select * from economy where userId=${msg.author.id}`, function (error, results, fields) {
+			db.exec(`select * from economy where userId=${msg.author.id}`, function (error, results, fields) {
 				if (error) console.log(error);
 				else if (!results[0]) {
 					return msg.reply(`${msg.author.username} has not registred with MangoBank!`)

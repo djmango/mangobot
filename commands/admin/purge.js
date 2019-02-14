@@ -18,7 +18,7 @@ module.exports = class SayCommand extends Command {
 		});
 	}
 	async run(msg, args) {
-		mysqlConnection.query(`select * from op where userId=${msg.author.id}`, function (error, results, fields) {
+		db.exec(`select * from op where userId=${msg.author.id}`, function (error, results, fields) {
 			if (error) throw error;
 			if (!results[0]) { //if it didnt work
 				return msg.reply('You are not a bot admin.');

@@ -13,7 +13,7 @@ module.exports = class SayCommand extends Command {
 		});
 	}
 	async run(msg) {
-		mysqlConnection.query(`select username from op`, function(error, results, fields) {
+		db.exec(`select username from op`, function(error, results, fields) {
 			if (error) throw error;
 			let admins = "";
 			for (var i in results) admins = admins + "\n" + results[i].username;

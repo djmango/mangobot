@@ -8,7 +8,7 @@ my previous discord bot, dnakbot, suffered from frequent crashes and didnt have 
 
 add mangobot to your server
 ------
-simply open [this](https://goo.gl/qoVTdx) link, and add follow the instructions!
+simply open [this](https://goo.gl/qoVTdx) link, and follow the instructions!
 
 features
 ------
@@ -35,6 +35,6 @@ how to run mangobot yourself:
 2.	download the latest version of nodejs from [here](https://nodejs.org) and install
 3.  extract the zip file and navigate to the directory using your terminal of choice (must be able to run node)
 4.  create a keys folder and make a keys.json file inside. then fill out the file as seen below
-5.	```json { "discordtoken": "your discord bot secret key", "youtubetoken": "your youtube api secret key", "googletoken": "your google project secret key", "apiaitoken": "your api.ai secret key", "botsudo": "your discord id"} ```
+5.	``` { "discordtoken": "your discord bot secret key", "youtubetoken": "your youtube api secret key", "googletoken": "your google project secret key", "apiaitoken": "your api.ai secret key", "botsudo": "your discord id"} ```
 6.  in your terminal, run `npm install`
 7.  once that completes, run `node --harmony index.js` in your terminal. thats it! your branch of mangobot is now ready for use!

@@ -13,10 +13,10 @@ module.exports = class SayCommand extends Command {
 		});
 	}
 	async run(msg) {
-		mysqlConnection.query(`select * from economy where userId=${msg.author.id}`, function (error, results, fields) {
+		db.exec(`select * from economy where userId=${msg.author.id}`, function (error, results, fields) {
 			if (error) console.log(error);
 			else if (!results[0]) { //if the user is not already in the list
-				mysqlConnection.query(`insert into economy (userId, username, value, lastRedeem)
+				db.exec(`insert into economy (userId, username, value, lastRedeem)
 						values (${msg.author.id}, '${msg.author.username}', 50, ${Date.now()})`, function (error, results, fields) {
 						return msg.reply(`Succesfully registered ${msg.author.username} with MangoBank! You have been given 50 MangoCredits for registering.`);
 					})
