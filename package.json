@@ -31,7 +31,7 @@
     "pretty-ms": "^3.0.1",
     "request": "^2.88.0",
     "sqlite3": "^4.0.6",
-    "striptags": "^3.1.0",
+    "striptags": "^3.2.0",
     "superagent": "^3.8.1",
     "urban-dictionary": "^1.0.6"
   }
